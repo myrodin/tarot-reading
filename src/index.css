@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #0a1929, #1a0033, #000000);
+  font-family: 'Georgia', serif;
+}
+
+.card-perspective {
+  perspective: 1000px;
+}
