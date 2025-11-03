@@ -3,14 +3,20 @@ import { useState } from 'react';
 
 const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   return (
     <motion.div
       className="card-perspective cursor-pointer"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.5 }}
-      whileHover={{ y: -10 }}
+      transition={
+        hasAnimated
+          ? { duration: 0.2 }
+          : { delay, duration: 0.5 }
+      }
+      whileHover={hasAnimated ? { y: -10 } : {}}
+      onAnimationComplete={() => setHasAnimated(true)}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={onFlip}

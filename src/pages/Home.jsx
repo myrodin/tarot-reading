@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   const spreads = [
     {
@@ -71,12 +73,23 @@ const Home = () => {
             key={spread.type}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2 + 0.5, duration: 0.5 }}
-            whileHover={{ scale: 1.05, y: -10 }}
+            whileHover={hasAnimated ? { scale: 1.05, y: -10 } : {}}
+            whileTap={{ scale: 0.98 }}
+            transition={
+              hasAnimated
+                ? { duration: 0.2 }
+                : {
+                    opacity: { delay: index * 0.2 + 0.5, duration: 0.5 },
+                    y: { delay: index * 0.2 + 0.5, duration: 0.5 },
+                    scale: { duration: 0.2 },
+                    default: { duration: 0.2 }
+                  }
+            }
+            onAnimationComplete={() => setHasAnimated(true)}
             className="cursor-pointer"
             onClick={() => navigate(`/reading/${spread.type}`)}
           >
-            <div className={`bg-gradient-to-br ${spread.color} rounded-2xl p-8 shadow-2xl hover:shadow-cosmic-gold/50 transition-all duration-300`}>
+            <div className={`bg-gradient-to-br ${spread.color} rounded-2xl p-8 shadow-2xl hover:shadow-cosmic-gold/50 transition-shadow duration-200`}>
               <div className="text-6xl mb-4 text-center animate-float">
                 {spread.icon}
               </div>
