@@ -4,6 +4,7 @@ import { useState } from 'react';
 const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isPendingHover, setIsPendingHover] = useState(false);
 
   return (
     <motion.div
@@ -16,9 +17,23 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
           : { delay, duration: 0.5 }
       }
       whileHover={hasAnimated ? { y: -10 } : {}}
-      onAnimationComplete={() => setHasAnimated(true)}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      onAnimationComplete={() => {
+        setHasAnimated(true);
+        if (isPendingHover) {
+          setIsHovered(true);
+        }
+      }}
+      onHoverStart={() => {
+        if (hasAnimated) {
+          setIsHovered(true);
+        } else {
+          setIsPendingHover(true);
+        }
+      }}
+      onHoverEnd={() => {
+        setIsHovered(false);
+        setIsPendingHover(false);
+      }}
       onClick={onFlip}
     >
       <motion.div
@@ -35,8 +50,8 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
             transform: "rotateY(0deg)",
           }}
         >
-          <div className="w-full h-full bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800 rounded-lg border-4 border-cosmic-gold flex items-center justify-center">
-            <div className="text-6xl animate-glow">✨</div>
+          <div className={`w-full h-full bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800 rounded-lg border-4 border-cosmic-gold flex items-center justify-center transition-shadow duration-200 ${isHovered ? 'shadow-[0_0_20px_rgba(255,215,0,0.8)]' : ''}`}>
+            <div className="text-6xl">✨</div>
           </div>
         </div>
 
