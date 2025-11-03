@@ -1,10 +1,21 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 const Home = () => {
   const navigate = useNavigate();
   const [hasAnimated, setHasAnimated] = useState(false);
+
+  // Memoize star positions to prevent re-render
+  const stars = useMemo(() => {
+    return [...Array(20)].map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      duration: 2 + Math.random() * 2,
+      delay: Math.random() * 2
+    }));
+  }, []);
 
   const spreads = [
     {
@@ -24,10 +35,10 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-8 relative">
       {/* Header */}
       <motion.div
-        className="text-center mb-16"
+        className="text-center mb-16 relative z-10"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -52,7 +63,7 @@ const Home = () => {
 
       {/* Decorative elements */}
       <motion.div
-        className="text-8xl mb-12"
+        className="text-8xl mb-12 relative z-10"
         animate={{
           rotate: [0, 360],
           scale: [1, 1.1, 1],
@@ -67,7 +78,7 @@ const Home = () => {
       </motion.div>
 
       {/* Spread Options */}
-      <div className="grid md:grid-cols-2 gap-8 max-w-4xl w-full mb-12">
+      <div className="grid md:grid-cols-2 gap-8 max-w-4xl w-full mb-12 relative z-10">
         {spreads.map((spread, index) => (
           <motion.div
             key={spread.type}
@@ -106,7 +117,7 @@ const Home = () => {
 
       {/* Footer */}
       <motion.div
-        className="text-purple-400 text-sm text-center"
+        className="text-purple-400 text-sm text-center relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
@@ -116,23 +127,23 @@ const Home = () => {
       </motion.div>
 
       {/* Animated stars */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        {stars.map((star) => (
           <motion.div
-            key={i}
-            className="absolute text-cosmic-gold opacity-50"
+            key={star.id}
+            className="absolute text-cosmic-gold"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${star.left}%`,
+              top: `${star.top}%`,
             }}
             animate={{
-              opacity: [0.2, 0.8, 0.2],
+              opacity: [0.2, 0.5, 0.2],
               scale: [1, 1.5, 1],
             }}
             transition={{
-              duration: 2 + Math.random() * 2,
+              duration: star.duration,
               repeat: Infinity,
-              delay: Math.random() * 2,
+              delay: star.delay,
             }}
           >
             ⭐
