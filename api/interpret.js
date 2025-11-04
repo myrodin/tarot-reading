@@ -35,14 +35,14 @@ export default async function handler(req, res) {
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-    // Gemini 2.5 Flash - 안정적이고 빠른 무료 모델
+    // Gemini 2.5 Flash Lite - 더 가볍고 빠른 무료 모델
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.5-flash-lite',
       generationConfig: {
         temperature: 0.8,
         topK: 30,
         topP: 0.9,
-        maxOutputTokens: 800,
+        maxOutputTokens: 600,
       }
     });
 
@@ -69,10 +69,27 @@ ${cardDescriptions}
 각 카드를 2문장으로 간결하게 해석하고, JSON으로 응답하세요:
 {"interpretations":[{"position":"${labels[0]}","message":"해석"}],"overallMessage":"전체 조언"}`;
 
-    // Gemini API 호출
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    // Gemini API 호출 (재시도 로직 포함)
+    let result, response, text;
+    let retries = 3;
+
+    for (let i = 0; i < retries; i++) {
+      try {
+        result = await model.generateContent(prompt);
+        response = await result.response;
+        text = response.text();
+        break; // 성공하면 루프 탈출
+      } catch (apiError) {
+        if (i === retries - 1) throw apiError; // 마지막 시도 실패 시 에러 던지기
+
+        // 503 에러면 잠시 대기 후 재시도
+        if (apiError.status === 503) {
+          await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1))); // 1초, 2초, 3초 대기
+          continue;
+        }
+        throw apiError; // 다른 에러는 즉시 던지기
+      }
+    }
 
     // JSON 파싱 시도
     let parsedResponse;
