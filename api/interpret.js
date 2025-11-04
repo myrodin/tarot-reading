@@ -39,10 +39,10 @@ export default async function handler(req, res) {
     const model = genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
       generationConfig: {
-        temperature: 0.9,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 2048,
+        temperature: 0.8,
+        topK: 30,
+        topP: 0.9,
+        maxOutputTokens: 800,
       }
     });
 
@@ -58,33 +58,16 @@ export default async function handler(req, res) {
       `${labels[index]}: ${card.name} (${card.koreanName})\n키워드: ${card.keywords.join(', ')}\n정방향: ${card.upright}\n역방향: ${card.reversed}`
     ).join('\n\n');
 
-    // 프롬프트 생성
-    const prompt = `당신은 전문 타로 리더입니다. 다음 상황에 대해 뽑은 타로 카드들을 해석해주세요.
+    // 프롬프트 생성 (간소화)
+    const prompt = `타로 리더로서 다음 상황에 대한 카드를 해석해주세요.
 
-**고민 상황:**
-카테고리: ${category || '일반'}
-상황: ${situation || '전반적인 운세'}
+고민: ${category || '일반'} - ${situation || '전반적인 운세'}
 
-**뽑은 카드:**
+카드:
 ${cardDescriptions}
 
-**요청사항:**
-1. 각 카드를 고민 상황과 연결하여 구체적으로 해석해주세요
-2. 카드의 정방향/역방향 의미를 상황에 맞게 적용해주세요
-3. 따뜻하고 공감적인 어조로 작성해주세요
-4. 각 카드마다 2-3문장 정도로 간결하게 해석해주세요
-5. 실천 가능한 조언을 포함해주세요
-
-다음 JSON 형식으로 응답해주세요:
-{
-  "interpretations": [
-    {
-      "position": "과거/현재/미래 등",
-      "message": "해당 카드의 해석 내용"
-    }
-  ],
-  "overallMessage": "전체적인 조언 및 메시지 (2-3문장)"
-}`;
+각 카드를 2문장으로 간결하게 해석하고, JSON으로 응답하세요:
+{"interpretations":[{"position":"${labels[0]}","message":"해석"}],"overallMessage":"전체 조언"}`;
 
     // Gemini API 호출
     const result = await model.generateContent(prompt);
