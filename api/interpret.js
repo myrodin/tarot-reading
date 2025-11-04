@@ -29,9 +29,15 @@ export default async function handler(req, res) {
     }
 
     // Gemini API 초기화
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(500).json({ error: 'GEMINI_API_KEY not configured' });
+    }
+
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+    // 가장 범용적인 모델 이름 사용
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-pro',
+      model: 'models/gemini-pro',
       generationConfig: {
         temperature: 0.9,
         topK: 40,
