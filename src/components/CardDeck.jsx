@@ -7,6 +7,7 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
   const [shuffledCards, setShuffledCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
   const [flippedIndices, setFlippedIndices] = useState([]);
+  const [cardOrientations, setCardOrientations] = useState({});
   const [isSelecting, setIsSelecting] = useState(true);
 
   const cardCount = {
@@ -25,6 +26,7 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
     setShuffledCards(shuffled);
     setSelectedCards([]);
     setFlippedIndices([]);
+    setCardOrientations({});
     setIsSelecting(true);
   }, [spreadType]);
 
@@ -42,6 +44,12 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
     };
 
     const newSelectedCards = [...selectedCards, cardWithOrientation];
+
+    // 카드 방향 정보 저장
+    setCardOrientations(prev => ({
+      ...prev,
+      [index]: isReversed
+    }));
 
     setFlippedIndices(newFlippedIndices);
     setSelectedCards(newSelectedCards);
@@ -69,15 +77,23 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
       </motion.h2>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
-        {shuffledCards.map((card, index) => (
-          <Card
-            key={index}
-            card={card}
-            isFlipped={flippedIndices.includes(index)}
-            onFlip={() => handleCardFlip(index)}
-            delay={index * 0.1}
-          />
-        ))}
+        {shuffledCards.map((card, index) => {
+          // 카드에 방향 정보 추가
+          const cardWithOrientation = {
+            ...card,
+            isReversed: cardOrientations[index] || false
+          };
+
+          return (
+            <Card
+              key={index}
+              card={cardWithOrientation}
+              isFlipped={flippedIndices.includes(index)}
+              onFlip={() => handleCardFlip(index)}
+              delay={index * 0.1}
+            />
+          );
+        })}
       </div>
 
       <motion.div
