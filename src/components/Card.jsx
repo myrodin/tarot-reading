@@ -63,10 +63,19 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
             transform: "rotateY(180deg)",
           }}
         >
-          <div className="w-full h-full bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 border-cosmic-gold p-4 flex flex-col items-center justify-center">
-            <div className="text-5xl mb-2">{card.image}</div>
+          <div className={`w-full h-full bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${card.isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center transition-colors duration-300`}>
+            <div
+              className="text-5xl mb-2 transition-transform duration-300"
+              style={{
+                transform: card.isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
+              }}
+            >
+              {card.image}
+            </div>
             <div className="text-center">
-              <div className="text-xs font-bold text-purple-900">{card.name}</div>
+              <div className="text-xs font-bold text-purple-900">
+                {card.isReversed ? '⬇️ ' : '⬆️ '}{card.name}
+              </div>
               <div className="text-xs text-purple-700">{card.koreanName}</div>
             </div>
           </div>

@@ -121,10 +121,19 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
               <div className="flex flex-col md:flex-row items-center gap-6">
                 {/* Card Image */}
                 <div className="flex-shrink-0">
-                  <div className="w-32 h-48 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 border-cosmic-gold p-4 flex flex-col items-center justify-center shadow-xl">
-                    <div className="text-5xl mb-2">{cards[index].image}</div>
+                  <div className={`w-32 h-48 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${cards[index].isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center shadow-xl`}>
+                    <div
+                      className="text-5xl mb-2"
+                      style={{
+                        transform: cards[index].isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
+                      }}
+                    >
+                      {cards[index].image}
+                    </div>
                     <div className="text-center">
-                      <div className="text-xs font-bold text-purple-900">{cards[index].name}</div>
+                      <div className="text-xs font-bold text-purple-900">
+                        {cards[index].isReversed ? '⬇️ ' : '⬆️ '}{cards[index].name}
+                      </div>
                       <div className="text-xs text-purple-700">{cards[index].koreanName}</div>
                     </div>
                   </div>
@@ -183,10 +192,19 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
             >
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-shrink-0">
-                  <div className="w-32 h-48 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 border-cosmic-gold p-4 flex flex-col items-center justify-center shadow-xl">
-                    <div className="text-5xl mb-2">{card.image}</div>
+                  <div className={`w-32 h-48 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${card.isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center shadow-xl`}>
+                    <div
+                      className="text-5xl mb-2"
+                      style={{
+                        transform: card.isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
+                      }}
+                    >
+                      {card.image}
+                    </div>
                     <div className="text-center">
-                      <div className="text-xs font-bold text-purple-900">{card.name}</div>
+                      <div className="text-xs font-bold text-purple-900">
+                        {card.isReversed ? '⬇️ ' : '⬆️ '}{card.name}
+                      </div>
                       <div className="text-xs text-purple-700">{card.koreanName}</div>
                     </div>
                   </div>
