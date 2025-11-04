@@ -54,10 +54,10 @@ const Home = () => {
           }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          신비로운 타로
+          타로 고민 상담소
         </motion.h1>
         <p className="text-xl text-purple-300 font-serif">
-          카드가 전하는 메시지를 들어보세요
+          당신을 괴롭히고 있는 게 무엇인가요?
         </p>
       </motion.div>
 

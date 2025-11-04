@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import concernsData from '../data/concerns.json';
 
-const Interpretation = ({ cards, spreadType }) => {
+const Interpretation = ({ cards, spreadType, category, situation }) => {
   const navigate = useNavigate();
+  const categoryData = category ? concernsData[category] : null;
 
   const spreadLabels = {
     one: ['오늘의 메시지'],
@@ -13,13 +15,26 @@ const Interpretation = ({ cards, spreadType }) => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-8">
-      <motion.h2
-        className="text-4xl text-cosmic-gold font-serif mb-12 text-center"
+      <motion.div
+        className="text-center mb-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        당신의 타로 리딩
-      </motion.h2>
+        <h2 className="text-4xl text-cosmic-gold font-serif mb-4">
+          당신의 타로 리딩
+        </h2>
+        {categoryData && situation && (
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex items-center gap-2 text-purple-300">
+              <span className="text-2xl">{categoryData.icon}</span>
+              <span className="text-lg font-serif">{categoryData.name}</span>
+            </div>
+            <p className="text-purple-200 text-sm max-w-md">
+              "{situation}"
+            </p>
+          </div>
+        )}
+      </motion.div>
 
       <div className="max-w-4xl w-full space-y-8">
         {cards.map((card, index) => (
