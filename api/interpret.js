@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
     // Gemini API 초기화
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
     // 스프레드 타입별 레이블
     const spreadLabels = {
