@@ -33,7 +33,15 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
     if (flippedIndices.includes(index)) return;
 
     const newFlippedIndices = [...flippedIndices, index];
-    const newSelectedCards = [...selectedCards, shuffledCards[index]];
+
+    // 랜덤하게 정방향(false) 또는 역방향(true) 결정
+    const isReversed = Math.random() < 0.5;
+    const cardWithOrientation = {
+      ...shuffledCards[index],
+      isReversed
+    };
+
+    const newSelectedCards = [...selectedCards, cardWithOrientation];
 
     setFlippedIndices(newFlippedIndices);
     setSelectedCards(newSelectedCards);

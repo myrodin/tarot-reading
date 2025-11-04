@@ -54,9 +54,11 @@ export default async function handler(req, res) {
     const labels = spreadLabels[spreadType] || cards.map((_, i) => `카드 ${i + 1}`);
 
     // 카드 정보 구성
-    const cardDescriptions = cards.map((card, index) =>
-      `${labels[index]}: ${card.name} (${card.koreanName})\n키워드: ${card.keywords.join(', ')}\n정방향: ${card.upright}\n역방향: ${card.reversed}`
-    ).join('\n\n');
+    const cardDescriptions = cards.map((card, index) => {
+      const orientation = card.isReversed ? '역방향' : '정방향';
+      const meaning = card.isReversed ? card.reversed : card.upright;
+      return `${labels[index]}: ${card.name} (${card.koreanName}) - ${orientation}\n의미: ${meaning}`;
+    }).join('\n\n');
 
     // 프롬프트 생성 (간소화)
     const prompt = `타로 리더로서 다음 상황에 대한 카드를 해석해주세요.

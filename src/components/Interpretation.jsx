@@ -140,6 +140,9 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
 
                   <h3 className="text-2xl font-serif mb-4 text-cosmic-gold">
                     {cards[index].name} - {cards[index].koreanName}
+                    {cards[index].isReversed && (
+                      <span className="text-sm text-purple-300 ml-2">(역방향)</span>
+                    )}
                   </h3>
 
                   <p className="text-gray-200 leading-relaxed whitespace-pre-line">
@@ -198,6 +201,9 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
 
                   <h3 className="text-2xl font-serif mb-2 text-cosmic-gold">
                     {card.name} - {card.koreanName}
+                    {card.isReversed && (
+                      <span className="text-sm text-purple-300 ml-2">(역방향)</span>
+                    )}
                   </h3>
 
                   <div className="mb-3">
@@ -211,14 +217,17 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
                   </div>
 
                   <div className="space-y-3">
-                    <div>
-                      <div className="text-sm font-semibold text-purple-300 mb-1">정방향 의미</div>
-                      <p className="text-gray-300 leading-relaxed">{card.upright}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold text-purple-300 mb-1">역방향 의미</div>
-                      <p className="text-gray-300 leading-relaxed">{card.reversed}</p>
-                    </div>
+                    {!card.isReversed ? (
+                      <div>
+                        <div className="text-sm font-semibold text-purple-300 mb-1">정방향 의미</div>
+                        <p className="text-gray-300 leading-relaxed">{card.upright}</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <div className="text-sm font-semibold text-purple-300 mb-1">역방향 의미</div>
+                        <p className="text-gray-300 leading-relaxed">{card.reversed}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
