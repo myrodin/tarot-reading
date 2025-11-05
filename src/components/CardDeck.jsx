@@ -19,10 +19,18 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
   const maxCards = cardCount[spreadType];
 
   useEffect(() => {
-    // Shuffle cards
-    const shuffled = [...tarotData.majorArcana]
+    // Shuffle cards - 메이저(22장) + 마이너(56장) = 78장 전체 덱
+    const allCards = [
+      ...tarotData.majorArcana,
+      ...tarotData.minorArcana.wands,
+      ...tarotData.minorArcana.cups,
+      ...tarotData.minorArcana.swords,
+      ...tarotData.minorArcana.pentacles
+    ];
+
+    const shuffled = [...allCards]
       .sort(() => Math.random() - 0.5)
-      .slice(0, Math.min(12, tarotData.majorArcana.length));
+      .slice(0, 12);
     setShuffledCards(shuffled);
     setSelectedCards([]);
     setFlippedIndices([]);

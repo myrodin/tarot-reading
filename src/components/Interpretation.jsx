@@ -17,6 +17,40 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
 
   const labels = spreadLabels[spreadType] || ['카드'];
 
+  // 슈트별 스타일 정의 함수
+  const getSuitStyle = (card) => {
+    if (card.cardType === 'minor' && card.suit) {
+      const suitStyles = {
+        wands: {
+          borderColor: '#ef4444',
+          bgGradient: 'from-red-50 to-orange-100',
+          textColor: 'text-red-900',
+          icon: '🔥'
+        },
+        cups: {
+          borderColor: '#3b82f6',
+          bgGradient: 'from-blue-50 to-cyan-100',
+          textColor: 'text-blue-900',
+          icon: '💧'
+        },
+        swords: {
+          borderColor: '#eab308',
+          bgGradient: 'from-yellow-50 to-amber-100',
+          textColor: 'text-yellow-900',
+          icon: '⚔️'
+        },
+        pentacles: {
+          borderColor: '#22c55e',
+          bgGradient: 'from-green-50 to-emerald-100',
+          textColor: 'text-green-900',
+          icon: '🪙'
+        }
+      };
+      return suitStyles[card.suit] || null;
+    }
+    return null;
+  };
+
   useEffect(() => {
     const fetchInterpretation = async () => {
       try {
@@ -121,22 +155,39 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
               <div className="flex flex-col md:flex-row items-center gap-6">
                 {/* Card Image */}
                 <div className="flex-shrink-0">
-                  <div className={`w-32 h-48 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${cards[index].isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center shadow-xl`}>
-                    <div
-                      className="text-3xl sm:text-4xl md:text-5xl mb-2"
-                      style={{
-                        transform: cards[index].isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
-                      }}
-                    >
-                      {cards[index].image}
-                    </div>
-                    <div className="text-center">
-                      <div className="text-xs font-bold text-purple-900">
-                        {cards[index].isReversed ? '⬇️ ' : '⬆️ '}{cards[index].name}
+                  {(() => {
+                    const suitStyle = getSuitStyle(cards[index]);
+                    const bgGradient = suitStyle ? suitStyle.bgGradient : 'from-amber-50 to-yellow-100';
+                    const borderColor = suitStyle
+                      ? (cards[index].isReversed ? '#7c3aed' : suitStyle.borderColor)
+                      : (cards[index].isReversed ? '#7c3aed' : '#d4af37');
+                    const textColor = suitStyle ? suitStyle.textColor : 'text-purple-900';
+
+                    return (
+                      <div
+                        className={`w-32 h-48 bg-gradient-to-br ${bgGradient} rounded-lg border-4 p-4 flex flex-col items-center justify-center shadow-xl`}
+                        style={{ borderColor }}
+                      >
+                        {suitStyle && (
+                          <div className="text-xs mb-1">{suitStyle.icon}</div>
+                        )}
+                        <div
+                          className="text-3xl sm:text-4xl md:text-5xl mb-2"
+                          style={{
+                            transform: cards[index].isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
+                          }}
+                        >
+                          {cards[index].image}
+                        </div>
+                        <div className="text-center">
+                          <div className={`text-xs font-bold ${textColor}`}>
+                            {cards[index].isReversed ? '⬇️ ' : '⬆️ '}{cards[index].name}
+                          </div>
+                          <div className={`text-xs ${textColor} opacity-80`}>{cards[index].koreanName}</div>
+                        </div>
                       </div>
-                      <div className="text-xs text-purple-700">{cards[index].koreanName}</div>
-                    </div>
-                  </div>
+                    );
+                  })()}
                 </div>
 
                 {/* AI Interpretation */}
@@ -192,22 +243,39 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
             >
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-shrink-0">
-                  <div className={`w-32 h-48 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${card.isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center shadow-xl`}>
-                    <div
-                      className="text-3xl sm:text-4xl md:text-5xl mb-2"
-                      style={{
-                        transform: card.isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
-                      }}
-                    >
-                      {card.image}
-                    </div>
-                    <div className="text-center">
-                      <div className="text-xs font-bold text-purple-900">
-                        {card.isReversed ? '⬇️ ' : '⬆️ '}{card.name}
+                  {(() => {
+                    const suitStyle = getSuitStyle(card);
+                    const bgGradient = suitStyle ? suitStyle.bgGradient : 'from-amber-50 to-yellow-100';
+                    const borderColor = suitStyle
+                      ? (card.isReversed ? '#7c3aed' : suitStyle.borderColor)
+                      : (card.isReversed ? '#7c3aed' : '#d4af37');
+                    const textColor = suitStyle ? suitStyle.textColor : 'text-purple-900';
+
+                    return (
+                      <div
+                        className={`w-32 h-48 bg-gradient-to-br ${bgGradient} rounded-lg border-4 p-4 flex flex-col items-center justify-center shadow-xl`}
+                        style={{ borderColor }}
+                      >
+                        {suitStyle && (
+                          <div className="text-xs mb-1">{suitStyle.icon}</div>
+                        )}
+                        <div
+                          className="text-3xl sm:text-4xl md:text-5xl mb-2"
+                          style={{
+                            transform: card.isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
+                          }}
+                        >
+                          {card.image}
+                        </div>
+                        <div className="text-center">
+                          <div className={`text-xs font-bold ${textColor}`}>
+                            {card.isReversed ? '⬇️ ' : '⬆️ '}{card.name}
+                          </div>
+                          <div className={`text-xs ${textColor} opacity-80`}>{card.koreanName}</div>
+                        </div>
                       </div>
-                      <div className="text-xs text-purple-700">{card.koreanName}</div>
-                    </div>
-                  </div>
+                    );
+                  })()}
                 </div>
 
                 <div className="flex-1 text-white">

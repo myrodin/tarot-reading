@@ -6,6 +6,43 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
   const [hasAnimated, setHasAnimated] = useState(false);
   const [isPendingHover, setIsPendingHover] = useState(false);
 
+  // 슈트별 스타일 정의
+  const getSuitStyle = () => {
+    if (card.cardType === 'minor' && card.suit) {
+      const suitStyles = {
+        wands: {
+          borderColor: '#ef4444',
+          bgGradient: 'from-red-50 to-orange-100',
+          textColor: 'text-red-900',
+          icon: '🔥'
+        },
+        cups: {
+          borderColor: '#3b82f6',
+          bgGradient: 'from-blue-50 to-cyan-100',
+          textColor: 'text-blue-900',
+          icon: '💧'
+        },
+        swords: {
+          borderColor: '#eab308',
+          bgGradient: 'from-yellow-50 to-amber-100',
+          textColor: 'text-yellow-900',
+          icon: '⚔️'
+        },
+        pentacles: {
+          borderColor: '#22c55e',
+          bgGradient: 'from-green-50 to-emerald-100',
+          textColor: 'text-green-900',
+          icon: '🪙'
+        }
+      };
+      return suitStyles[card.suit] || null;
+    }
+    return null;
+  };
+
+  const suitStyle = getSuitStyle();
+  const isMajor = !card.cardType || card.cardType !== 'minor';
+
   return (
     <motion.div
       className="card-perspective cursor-pointer"
@@ -63,7 +100,19 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
             transform: "rotateY(180deg)",
           }}
         >
-          <div className={`w-full h-full bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${card.isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center transition-colors duration-300`}>
+          <div
+            className={`w-full h-full bg-gradient-to-br ${suitStyle ? suitStyle.bgGradient : 'from-amber-50 to-yellow-100'} rounded-lg border-4 p-4 flex flex-col items-center justify-center transition-colors duration-300`}
+            style={{
+              borderColor: suitStyle
+                ? (card.isReversed ? '#7c3aed' : suitStyle.borderColor)
+                : (card.isReversed ? '#7c3aed' : '#d4af37')
+            }}
+          >
+            {/* 슈트 아이콘 (마이너 아르카나만) */}
+            {suitStyle && (
+              <div className="text-sm mb-1">{suitStyle.icon}</div>
+            )}
+
             <div
               className="text-3xl sm:text-4xl md:text-5xl mb-2 transition-transform duration-300"
               style={{
@@ -73,10 +122,12 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
               {card.image}
             </div>
             <div className="text-center">
-              <div className="text-xs font-bold text-purple-900">
+              <div className={`text-xs font-bold ${suitStyle ? suitStyle.textColor : 'text-purple-900'}`}>
                 {card.isReversed ? '⬇️ ' : '⬆️ '}{card.name}
               </div>
-              <div className="text-xs text-purple-700">{card.koreanName}</div>
+              <div className={`text-xs ${suitStyle ? suitStyle.textColor : 'text-purple-700'} opacity-80`}>
+                {card.koreanName}
+              </div>
             </div>
           </div>
         </div>
