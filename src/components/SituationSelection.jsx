@@ -9,17 +9,17 @@ const SituationSelection = ({ category, onSituationSelected }) => {
   const situations = categoryData.situations;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-6 lg:p-8 relative">
       {/* Header */}
       <motion.div
-        className="text-center mb-16 relative z-10"
+        className="text-center mb-8 md:mb-12 lg:mb-16 relative z-10"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="text-6xl mb-4">{categoryData.icon}</div>
+        <div className="text-4xl md:text-5xl lg:text-6xl mb-3 md:mb-4">{categoryData.icon}</div>
         <motion.h1
-          className="text-5xl md:text-6xl font-serif text-cosmic-gold mb-4"
+          className="text-3xl md:text-5xl lg:text-6xl font-serif text-cosmic-gold mb-4"
           animate={{
             textShadow: [
               '0 0 20px rgba(255, 215, 0, 0.5)',
@@ -31,13 +31,13 @@ const SituationSelection = ({ category, onSituationSelected }) => {
         >
           {categoryData.name}
         </motion.h1>
-        <p className="text-lg text-purple-300 font-serif">
+        <p className="text-base md:text-lg text-purple-300 font-serif">
           어떤 상황인가요?
         </p>
       </motion.div>
 
       {/* Situation Options */}
-      <div className="grid md:grid-cols-2 gap-6 max-w-4xl w-full relative z-10">
+      <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-4xl w-full relative z-10">
         {situations.map((situation, index) => (
           <motion.div
             key={index}
@@ -59,8 +59,8 @@ const SituationSelection = ({ category, onSituationSelected }) => {
             className="cursor-pointer"
             onClick={() => onSituationSelected(situation)}
           >
-            <div className={`bg-gradient-to-br ${categoryData.color} rounded-2xl p-6 shadow-2xl hover:shadow-cosmic-gold/50 transition-shadow duration-200`}>
-              <p className="text-xl font-serif text-white text-center">
+            <div className={`bg-gradient-to-br ${categoryData.color} rounded-2xl p-4 md:p-6 shadow-2xl hover:shadow-cosmic-gold/50 transition-shadow duration-200`}>
+              <p className="text-base sm:text-lg md:text-xl font-serif text-white text-center">
                 {situation}
               </p>
             </div>

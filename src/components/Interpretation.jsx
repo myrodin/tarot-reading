@@ -59,20 +59,20 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
   }, [cards, categoryData, situation, spreadType]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-6 lg:p-8">
       <motion.div
-        className="text-center mb-12"
+        className="text-center mb-8 md:mb-10 lg:mb-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h2 className="text-4xl text-cosmic-gold font-serif mb-4">
+        <h2 className="text-3xl md:text-4xl text-cosmic-gold font-serif mb-4">
           당신의 타로 리딩
         </h2>
         {categoryData && situation && (
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-2 text-purple-300">
-              <span className="text-2xl">{categoryData.icon}</span>
-              <span className="text-lg font-serif">{categoryData.name}</span>
+              <span className="text-xl md:text-2xl">{categoryData.icon}</span>
+              <span className="text-base md:text-lg font-serif">{categoryData.name}</span>
             </div>
             <p className="text-purple-200 text-sm max-w-md">
               "{situation}"
@@ -88,8 +88,8 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <div className="text-6xl mb-4 animate-pulse">🔮</div>
-          <p className="text-xl font-serif">카드를 해석하고 있습니다...</p>
+          <div className="text-4xl md:text-5xl lg:text-6xl mb-3 md:mb-4 animate-pulse">🔮</div>
+          <p className="text-lg md:text-xl font-serif">카드를 해석하고 있습니다...</p>
         </motion.div>
       )}
 
@@ -100,7 +100,7 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <div className="bg-red-900/30 border-2 border-red-500/50 rounded-xl p-6 mb-8">
+          <div className="bg-red-900/30 border-2 border-red-500/50 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
             <p className="text-red-300 mb-4">AI 해석을 불러오는 중 오류가 발생했습니다.</p>
             <p className="text-sm text-gray-400">기본 해석을 표시합니다.</p>
           </div>
@@ -113,7 +113,7 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
           {aiInterpretation.interpretations?.map((interp, index) => (
             <motion.div
               key={index}
-              className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-xl p-6 border-2 border-purple-500/30 backdrop-blur-sm"
+              className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-xl p-4 md:p-6 border-2 border-purple-500/30 backdrop-blur-sm"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.3 }}
@@ -123,7 +123,7 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
                 <div className="flex-shrink-0">
                   <div className={`w-32 h-48 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${cards[index].isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center shadow-xl`}>
                     <div
-                      className="text-5xl mb-2"
+                      className="text-3xl sm:text-4xl md:text-5xl mb-2"
                       style={{
                         transform: cards[index].isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
                       }}
@@ -147,7 +147,7 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-serif mb-4 text-cosmic-gold">
+                  <h3 className="text-xl md:text-2xl font-serif mb-4 text-cosmic-gold">
                     {cards[index].name} - {cards[index].koreanName}
                     {cards[index].isReversed && (
                       <span className="text-sm text-purple-300 ml-2">(역방향)</span>
@@ -165,12 +165,12 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
           {/* Overall Message */}
           {aiInterpretation.overallMessage && (
             <motion.div
-              className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 rounded-xl p-6 border-2 border-cosmic-gold/30 backdrop-blur-sm"
+              className="bg-gradient-to-r from-amber-900/30 to-yellow-900/30 rounded-xl p-4 md:p-6 border-2 border-cosmic-gold/30 backdrop-blur-sm"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: cards.length * 0.3 + 0.3 }}
             >
-              <h4 className="text-xl font-serif text-cosmic-gold mb-3">✨ 전체 메시지</h4>
+              <h4 className="text-lg md:text-xl font-serif text-cosmic-gold mb-3">✨ 전체 메시지</h4>
               <p className="text-gray-200 leading-relaxed whitespace-pre-line">
                 {aiInterpretation.overallMessage}
               </p>
@@ -185,7 +185,7 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
           {cards.map((card, index) => (
             <motion.div
               key={index}
-              className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-xl p-6 border-2 border-purple-500/30 backdrop-blur-sm"
+              className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-xl p-4 md:p-6 border-2 border-purple-500/30 backdrop-blur-sm"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.3 }}
@@ -194,7 +194,7 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
                 <div className="flex-shrink-0">
                   <div className={`w-32 h-48 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${card.isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center shadow-xl`}>
                     <div
-                      className="text-5xl mb-2"
+                      className="text-3xl sm:text-4xl md:text-5xl mb-2"
                       style={{
                         transform: card.isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
                       }}
@@ -217,7 +217,7 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-serif mb-2 text-cosmic-gold">
+                  <h3 className="text-xl md:text-2xl font-serif mb-2 text-cosmic-gold">
                     {card.name} - {card.koreanName}
                     {card.isReversed && (
                       <span className="text-sm text-purple-300 ml-2">(역방향)</span>
@@ -255,20 +255,20 @@ const Interpretation = ({ cards, spreadType, category, situation }) => {
       )}
 
       <motion.div
-        className="mt-12 flex gap-4"
+        className="mt-8 md:mt-10 lg:mt-12 flex gap-3 md:gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: cards.length * 0.3 + 0.5 }}
       >
         <button
           onClick={() => window.location.reload()}
-          className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl"
+          className="px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl"
         >
           다시 보기
         </button>
         <button
           onClick={() => navigate('/')}
-          className="px-6 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 text-white rounded-lg font-semibold hover:from-amber-700 hover:to-yellow-700 transition-all shadow-lg hover:shadow-xl"
+          className="px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-amber-600 to-yellow-600 text-white rounded-lg font-semibold hover:from-amber-700 hover:to-yellow-700 transition-all shadow-lg hover:shadow-xl"
         >
           홈으로
         </button>

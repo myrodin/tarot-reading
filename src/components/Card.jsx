@@ -37,7 +37,7 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
       onClick={onFlip}
     >
       <motion.div
-        className="relative w-32 h-48 sm:w-40 sm:h-60"
+        className="relative w-28 h-42 sm:w-32 sm:h-48 md:w-40 md:h-60"
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.6, type: "spring" }}
         style={{ transformStyle: "preserve-3d" }}
@@ -51,7 +51,7 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
           }}
         >
           <div className={`w-full h-full bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800 rounded-lg border-4 border-cosmic-gold flex items-center justify-center transition-shadow duration-200 ${isHovered ? 'shadow-[0_0_20px_rgba(255,215,0,0.8)]' : ''}`}>
-            <div className="text-6xl">✨</div>
+            <div className="text-4xl sm:text-5xl md:text-6xl">✨</div>
           </div>
         </div>
 
@@ -65,7 +65,7 @@ const Card = ({ card, isFlipped, onFlip, delay = 0 }) => {
         >
           <div className={`w-full h-full bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg border-4 ${card.isReversed ? 'border-purple-700' : 'border-cosmic-gold'} p-4 flex flex-col items-center justify-center transition-colors duration-300`}>
             <div
-              className="text-5xl mb-2 transition-transform duration-300"
+              className="text-3xl sm:text-4xl md:text-5xl mb-2 transition-transform duration-300"
               style={{
                 transform: card.isReversed ? 'rotate(180deg)' : 'rotate(0deg)'
               }}

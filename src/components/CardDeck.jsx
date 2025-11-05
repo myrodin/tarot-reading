@@ -63,9 +63,9 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-6 lg:p-8">
       <motion.h2
-        className="text-3xl text-cosmic-gold font-serif mb-8 text-center"
+        className="text-xl md:text-2xl lg:text-3xl text-cosmic-gold font-serif mb-6 md:mb-8 text-center"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -76,7 +76,7 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
         )}
       </motion.h2>
 
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
         {shuffledCards.map((card, index) => {
           // 카드에 방향 정보 추가
           const cardWithOrientation = {
@@ -97,7 +97,7 @@ const CardDeck = ({ spreadType = 'one', onCardsSelected }) => {
       </div>
 
       <motion.div
-        className="mt-8 text-purple-300 text-center text-sm"
+        className="mt-6 md:mt-8 text-purple-300 text-center text-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}

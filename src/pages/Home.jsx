@@ -35,16 +35,16 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-6 lg:p-8 relative">
       {/* Header */}
       <motion.div
-        className="text-center mb-16 relative z-10"
+        className="text-center mb-8 md:mb-12 lg:mb-16 relative z-10"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
         <motion.h1
-          className="text-6xl md:text-7xl font-serif text-cosmic-gold mb-4"
+          className="text-4xl md:text-6xl lg:text-7xl font-serif text-cosmic-gold mb-4"
           animate={{
             textShadow: [
               '0 0 20px rgba(255, 215, 0, 0.5)',
@@ -56,14 +56,14 @@ const Home = () => {
         >
           타로 고민 상담소
         </motion.h1>
-        <p className="text-xl text-purple-300 font-serif">
+        <p className="text-lg md:text-xl text-purple-300 font-serif">
           당신을 괴롭히고 있는 게 무엇인가요?
         </p>
       </motion.div>
 
       {/* Decorative elements */}
       <motion.div
-        className="text-8xl mb-12 relative z-10"
+        className="text-5xl md:text-7xl lg:text-8xl mb-6 md:mb-10 lg:mb-12 relative z-10"
         animate={{
           rotate: [0, 360],
           scale: [1, 1.1, 1],
@@ -78,7 +78,7 @@ const Home = () => {
       </motion.div>
 
       {/* Spread Options */}
-      <div className="grid md:grid-cols-2 gap-8 max-w-4xl w-full mb-12 relative z-10">
+      <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 max-w-4xl w-full mb-8 md:mb-10 lg:mb-12 relative z-10">
         {spreads.map((spread, index) => (
           <motion.div
             key={spread.type}
@@ -100,11 +100,11 @@ const Home = () => {
             className="cursor-pointer"
             onClick={() => navigate(`/reading/${spread.type}`)}
           >
-            <div className={`bg-gradient-to-br ${spread.color} rounded-2xl p-8 shadow-2xl hover:shadow-cosmic-gold/50 transition-shadow duration-200`}>
-              <div className="text-6xl mb-4 text-center animate-float">
+            <div className={`bg-gradient-to-br ${spread.color} rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl hover:shadow-cosmic-gold/50 transition-shadow duration-200`}>
+              <div className="text-4xl sm:text-5xl md:text-6xl mb-3 md:mb-4 text-center animate-float">
                 {spread.icon}
               </div>
-              <h2 className="text-2xl font-serif text-white mb-2 text-center">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-serif text-white mb-2 text-center">
                 {spread.name}
               </h2>
               <p className="text-purple-200 text-center text-sm">
